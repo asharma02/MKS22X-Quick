@@ -26,7 +26,7 @@ public static int partition ( int [] data, int start, int end){
        swap(data, end, start); //swap end with current start
        end-- ; //make end lower
      }
-     else if (data[start] < pivot) { //if its smaller
+     else if (data[start] < original) { //if its smaller
        swap(data, start, pivot) ; //swap start with pivot
        start++; //index through start
        pivot++; //index through pivot
@@ -52,8 +52,8 @@ private static void swap(int[] data, int first, int second) {
    while (part != k) { //until the partition and wanted index are not the same
      if (k > part) {
        part = partition(data, part, data.length - 1);
-     }//if its larger, update the partition by starting at the current part
-     else {//if its less,  update partiion by ending at current part
+     }//if its larger, update the partition by starting at the current part RIGHT SIDE
+     else {//if its less,  update partiion by ending at current part LEFT SIDE
        part = partition(data, 0, part) ;
      }
    }
