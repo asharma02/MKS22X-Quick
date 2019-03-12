@@ -14,29 +14,22 @@ public class Quick {
  *@return the index of the final position of the pivot element.
  */
 public static int partition ( int [] data, int start, int end){
-  int extent = end - start + 1; //length of data
-  int pivot = (int)Math.abs(Math.random() * extent); //get random
-  pivot += start; //add pivot to start (at beginning it will be 0)
-  swap(data, pivot, start); //swap the pivot and start
-  int original = data[start]; //store the original start (pivot)
-  pivot = start; //set pivot equal to start
-  start++ ; //init start
-  while (start <= end) { //runs until the end
-     if (data[start] > original) { //if its larger
-       swap(data, end, start); //swap end with current start
-       end-- ; //make end lower
-     }
-     else if (data[start] < original) { //if its smaller
-       swap(data, start, pivot) ; //swap start with pivot
-       start++; //index through start
-       pivot++; //index through pivot
-     }
-     else {
-       start++;  //if it is the same, just add to start
-     }
-   }
-   return pivot; //return the end pivot you get
-}
+    Random random = new Random();
+	  int randomindex = random.nextInt(end - start + 1);
+	  int pivot = randomindex; //pivot is random
+    swap(data, pivot, start);
+	  int wherepart = start; //where you are partitioning from, begin with the start index
+	  for (int i = start; i <= end - 1; i++) {  //begin at start, loop through end
+	    if (data[i] < data[pivot]) { //if it is less than the pivot
+	      swap(data, i, wherepart); //swap the partition and the index you are at
+	      wherepart++; //move up the partition(the start)
+	    }
+	  }
+	  swap(data, wherepart, end);
+	        // swap the partition with the part
+	  return wherepart; //this is the pivot you return
+  }
+
 
 //private method to swap two indicies
 private static void swap(int[] data, int first, int second) {
@@ -54,10 +47,26 @@ private static void swap(int[] data, int first, int second) {
        part = partition(data, part, data.length - 1);
      }//if its larger, update the partition by starting at the current part RIGHT SIDE
      else {//if its less,  update partiion by ending at current part LEFT SIDE
-       part = partition(data, 0, part) ;
+       part = partition(data, 0, part);
      }
    }
    return data[part]; //return the k smallest which will be at the partition index
+ }
+
+ public static void main(String[] args) {
+    int[]ary = {2, 10, 15, 23, 0, 5} ;
+   System.out.println(quickselect(ary, 0)) ;
+   System.out.println("Expected: 0\n\n") ;
+  System.out.println(quickselect(ary, 1)) ; // would return 2
+  System.out.println("Expected: 2\n\n") ;
+  System.out.println(quickselect(ary, 2)) ; // would return 5
+  System.out.println("Expected: 5\n\n") ;
+  System.out.println(quickselect(ary, 3)) ; // would return 10
+  System.out.println("Expected: 10\n\n") ;
+  System.out.println(quickselect(ary, 4)) ; // would return 15
+  System.out.println("Expected: 15\n\n") ;
+  System.out.println(quickselect(ary, 5)) ; // would return 23
+  System.out.println("Expected: 23\n\n") ;
  }
 
 
