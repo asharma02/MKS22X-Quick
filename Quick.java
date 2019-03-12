@@ -15,7 +15,7 @@ public class Quick {
  */
 public static int partition ( int [] data, int start, int end){
   int extent = end - start + 1;
-  int pivot = (int)Math.abs(Math.random() * extent) ;
+  int pivot = (int)Math.abs(Math.random() * extent); //get random
   pivot += start; //add pivot to start
   swap(data, pivot, start); //swap the pivot and start
   int original = data[start]; //set the original start
@@ -44,6 +44,23 @@ private static void swap(int[] data, int first, int second) {
   data[first] = data[second];
   data[second] = temp;
 }
+
+/*return the value that is the kth smallest value of the array.
+ */
+ public static int quickselect(int []data, int k){
+   int part = partition(data, 0, data.length - 1) ; //get partition, start at 0, end at the end index
+   while (part != k) { //until the partition and wanted index are not the same
+     if (k > part) {
+       part = partition(data, part, data.length - 1);
+     }//if its larger, update the partition by starting at the current part
+     else {//if its less,  update partiion by ending at current part
+       part = partition(data, 0, part) ;
+     }
+   }
+   return data[part]; //return the k smallest which will be at the partition index
+ }
+
+ 
 
 
 
