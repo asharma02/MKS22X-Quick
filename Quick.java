@@ -19,7 +19,7 @@ public static int partition ( int [] data, int start, int end){
   pivot += start; //add pivot to start
   swap(data, pivot, start); //swap the pivot and start
   int original = data[start]; //set the original start
-  pivot = start; //set pivot eqyal to start
+  pivot = start; //set pivot equal to start
   start++ ; //init start
   while (start <= end) { //runs until the end
      if (data[start] > original) { //if its larger
