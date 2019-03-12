@@ -1,5 +1,6 @@
+import java.util.* ;
+import java.io.* ;
 
-import java.util.*;
 
 public class Quick {
 
@@ -12,20 +13,29 @@ public class Quick {
  *4. all elements in range that are larger than the pivot element are placed after the pivot element.
  *@return the index of the final position of the pivot element.
  */
-public int partition ( int [] data, int start, int end){
-  Random random = new Random();
-  int randomindex = random.nextInt(data.length);
-  int pivot = randomindex; //pivot is random
-  int wherepart = start; //where you are partitioning from, begin with the start index
-  for (int i = start; i <= end - 1; i++) {  //begin at start, loop through end
-    if (data[i] < data[pivot]) { //if it is less than the pivot
-      swap(data, i, wherepart); //swap the partition and the index you are at
-      wherepart++; //move up the partition(the start)
-    }
-  }
-  swap(data, wherepart, pivot);
-        // swap the partition with the part
-  return wherepart; //this is the pivot you return
+public static int partition ( int [] data, int start, int end){
+  int extent = end - start + 1;
+  int pivot = (int)Math.abs(Math.random() * extent) ;
+  pivot += start; //add pivot to start
+  swap(data, pivot, start); //swap the pivot and start
+  int original = data[start]; //set the original start
+  pivot = start; //set pivot eqyal to start
+  start++ ; //init start
+  while (start <= end) { //runs until the end
+     if (data[start] > original) { //if its larger
+       swap(data, end, start); //swap end with current start
+       end-- ; //make end lower
+     }
+     else if (data[start] < original) { //if its smaller
+       swap(data, start, pivot) ; //swap start with pivot
+       start++; //index through start
+       pivot++; //index through pivot
+     }
+     else {
+       start++;  //if it is the same, just add to start
+     }
+   }
+   return pivot; //return the end pivot you get
 }
 
 //private method to swap two indicies
@@ -35,11 +45,6 @@ private static void swap(int[] data, int first, int second) {
   data[second] = temp;
 }
 
-/*return the value that is the kth smallest value of the array.
- */
- public static int quickselect(int []data, int k){
-   return 0;
- }
 
 
 }
