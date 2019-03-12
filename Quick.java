@@ -14,11 +14,11 @@ public class Quick {
  *@return the index of the final position of the pivot element.
  */
 public static int partition ( int [] data, int start, int end){
-  int extent = end - start + 1;
+  int extent = end - start + 1; //length of data
   int pivot = (int)Math.abs(Math.random() * extent); //get random
-  pivot += start; //add pivot to start
+  pivot += start; //add pivot to start (at beginning it will be 0)
   swap(data, pivot, start); //swap the pivot and start
-  int original = data[start]; //set the original start
+  int original = data[start]; //store the original start (pivot)
   pivot = start; //set pivot equal to start
   start++ ; //init start
   while (start <= end) { //runs until the end
@@ -26,7 +26,7 @@ public static int partition ( int [] data, int start, int end){
        swap(data, end, start); //swap end with current start
        end-- ; //make end lower
      }
-     else if (data[start] < original) { //if its smaller
+     else if (data[start] < pivot) { //if its smaller
        swap(data, start, pivot) ; //swap start with pivot
        start++; //index through start
        pivot++; //index through pivot
@@ -60,7 +60,22 @@ private static void swap(int[] data, int first, int second) {
    return data[part]; //return the k smallest which will be at the partition index
  }
 
- 
+
+ public static void main(String[] args) {
+   int[]ary = {2, 10, 15, 23, 0, 5} ;
+  System.out.println(quickselect(ary, 0)) ;
+ System.out.println(quickselect(ary, 1)) ; // would return 2
+ System.out.println("Expected: 2\n\n") ;
+ System.out.println(quickselect(ary, 2)) ; // would return 5
+ System.out.println("Expected: 5\n\n") ;
+ System.out.println(quickselect(ary, 3)) ; // would return 10
+ System.out.println("Expected: 10\n\n") ;
+ System.out.println(quickselect(ary, 4)) ; // would return 15
+ System.out.println("Expected: 15\n\n") ;
+ System.out.println(quickselect(ary, 5)) ; // would return 23
+ System.out.println("Expected: 23\n\n") ;
+ System.out.println("\n*********************************Here is a new array!!*********************************") ;
+}
 
 
 
