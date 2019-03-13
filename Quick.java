@@ -5,7 +5,7 @@ import java.io.* ;
 public class Quick {
 
   /*Choose a random pivot element between the start and end index inclusive,
- Then modify the array such that:
+ Then modify the dataay such that:
  *1. Only the indices from start to end inclusive are considered in range
  *2. A random index from start to end inclusive is chosen, the corresponding
  *   element is designated the pivot element.
@@ -14,22 +14,17 @@ public class Quick {
  *@return the index of the final position of the pivot element.
  */
 public static int partition ( int [] data, int start, int end){
-    Random random = new Random();
-	  int randomindex = random.nextInt(end - start + 1);
-	  int pivot = randomindex; //pivot is random
-    swap(data, pivot, start);
-	  int wherepart = start; //where you are partitioning from, begin with the start index
-	  for (int i = start; i <= end - 1; i++) {  //begin at start, loop through end
-	    if (data[i] < data[pivot]) { //if it is less than the pivot
-	      swap(data, i, wherepart); //swap the partition and the index you are at
-	      wherepart++; //move up the partition(the start)
-	    }
-	  }
-	  swap(data, wherepart, end);
-	        // swap the partition with the part
-	  return wherepart; //this is the pivot you return
+  int pivot = end;
+  int part = start;
+  for (int i = start; i <= end - 1; i++) {
+    if (data[i] < data[pivot]) {
+      swap(data, i, part);
+      part++;
+    }
   }
-
+  swap(data, part, pivot);
+  return part;
+}
 
 //private method to swap two indicies
 private static void swap(int[] data, int first, int second) {
@@ -38,23 +33,31 @@ private static void swap(int[] data, int first, int second) {
   data[second] = temp;
 }
 
-/*return the value that is the kth smallest value of the array.
+/*return the value that is the kth smallest value of the dataay.
  */
  public static int quickselect(int []data, int k){
-   int part = partition(data, 0, data.length - 1) ; //get partition, start at 0, end at the end index
-   while (part != k) { //until the partition and wanted index are not the same
-     if (k > part) {
-       part = partition(data, part, data.length - 1);
-     }//if its larger, update the partition by starting at the current part RIGHT SIDE
-     else {//if its less,  update partiion by ending at current part LEFT SIDE
-       part = partition(data, 0, part);
-     }
-   }
-   return data[part]; //return the k smallest which will be at the partition index
+   return quickselecth(data, 0, data.length - 1, k);
  }
 
+ private static int quickselecth(int[] data, int start, int end, int k) {
+   if (start == end) {
+            return data[start];
+    }
+    int pivot = partition(data, start, end);
+    if (pivot == k) {
+      return data[pivot];
+    }
+    if (k < pivot) {
+      return quickselecth(data, start, pivot - 1, k);
+    }
+    else {
+      return quickselecth(data, pivot + 1, end, k);
+    }
+ }
+
+
  public static void main(String[] args) {
-    int[]ary = {2, 10, 15, 23, 0, 5} ;
+    int[]ary = {2, 10, 15, 23, 0, 5, 2, 2, 2} ;
    System.out.println(quickselect(ary, 0)) ;
    System.out.println("Expected: 0\n\n") ;
   System.out.println(quickselect(ary, 1)) ; // would return 2
