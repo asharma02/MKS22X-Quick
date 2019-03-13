@@ -18,7 +18,7 @@ public static int partition (int [] data, int start, int end){
   int part = start; //set start index
   for (int i = start; i <= end - 1; i++) { //loop through array
     if (data[i] < data[pivot]) { //if the current is less than the pivot
-      swap(data, i, part);//swap the current with the start
+      swap(data, i, part);//swap the current with the partiton (start at first)
       part++; //add to the partition
     }
   }
@@ -41,7 +41,7 @@ private static void swap(int[] data, int first, int second) {
 
  private static int quickselecth(int[] data, int start, int end, int k) {
    if (start == end) {
-            return data[start];
+     return data[start];
     } //if the start and end are the same, return that value
     int pivot = partition(data, start, end); //partition it
     if (pivot == k) {
@@ -56,24 +56,16 @@ private static void swap(int[] data, int first, int second) {
  }
 
 
-
+/**
  public static void main(String[] args) {
-    int[]ary = {2, 10, 15, 23, 0, 5, 2, 2, 2} ;
+    int[]ary = {2, 10, 15, 23, 0, 5, 0} ;
    System.out.println(quickselect(ary, 0)) ;
-   System.out.println("Expected: 0\n\n") ;
-  System.out.println(quickselect(ary, 1)) ; // would return 2
-  System.out.println("Expected: 2\n\n") ;
-  System.out.println(quickselect(ary, 2)) ; // would return 5
-  System.out.println("Expected: 5\n\n") ;
-  System.out.println(quickselect(ary, 3)) ; // would return 10
-  System.out.println("Expected: 10\n\n") ;
-  System.out.println(quickselect(ary, 4)) ; // would return 15
-  System.out.println("Expected: 15\n\n") ;
-  System.out.println(quickselect(ary, 5)) ; // would return 23
-  System.out.println("Expected: 23\n\n") ;
+  System.out.println(quickselect(ary, 1)) ;
+  System.out.println(quickselect(ary, 2)) ;
+  System.out.println(quickselect(ary, 3)) ;
  }
 
-
+**/
 
 
 }
