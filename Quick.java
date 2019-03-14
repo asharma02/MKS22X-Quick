@@ -13,7 +13,7 @@ public class Quick {
  *4. all elements in range that are larger than the pivot element are placed after the pivot element.
  *@return the index of the final position of the pivot element.
  */
-public static int partition (int [] data, int start, int end){
+public static int selectpartition (int [] data, int start, int end){
   int pivot = end;//set pivot to one side
   int part = start; //set start index
   for (int i = start; i <= end - 1; i++) { //loop through array
@@ -23,6 +23,22 @@ public static int partition (int [] data, int start, int end){
     }
   }
   swap(data, part, pivot); //switch the pivot back to the partition
+  return part; //this will be the pivot that was moved
+}
+
+public static int partition (int [] data, int start, int end){
+  Random random = new Random();
+  int randomindex = random.nextInt(end - start + 1);
+  int pivot = randomindex;//set pivot to one side
+  swap(data, pivot, end);
+  int part = start; //set start index
+  for (int i = start; i <= end - 1; i++) { //loop through array
+    if (data[i] < data[end]) { //if the current is less than the pivot
+      swap(data, i, part);//swap the current with the partiton (start at first)
+      part++; //add to the partition
+    }
+  }
+  swap(data, part, end); //switch the pivot back to the partition
   return part; //this will be the pivot that was moved
 }
 
@@ -39,11 +55,12 @@ private static void swap(int[] data, int first, int second) {
    return quickselecth(data, 0, data.length - 1, k); //call helper method with start = 0 and end = last index
  }
 
+
  private static int quickselecth(int[] data, int start, int end, int k) {
    if (start == end) {
      return data[start];
     } //if the start and end are the same, return that value
-    int pivot = partition(data, start, end); //partition it
+    int pivot = selectpartition(data, start, end); //partition it
     if (pivot == k) {
       return data[pivot];
     } //when the pivot is the same as k, return the value at the pivot
@@ -56,16 +73,27 @@ private static void swap(int[] data, int first, int second) {
  }
 
 
-/**
- public static void main(String[] args) {
-    int[]ary = {2, 10, 15, 23, 0, 5, 0} ;
-   System.out.println(quickselect(ary, 0)) ;
-  System.out.println(quickselect(ary, 1)) ;
-  System.out.println(quickselect(ary, 2)) ;
-  System.out.println(quickselect(ary, 3)) ;
- }
 
-**/
+
+ public static void main(String[] args) {
+   int[]ary = {2, 10, 15, 23, 0, 5} ;
+  System.out.println(quickselect(ary, 0)) ;
+  System.out.println("Expected: 0\n\n") ;
+ System.out.println(quickselect(ary, 1)) ; // would return 2
+ System.out.println("Expected: 2\n\n") ;
+ System.out.println(quickselect(ary, 2)) ; // would return 5
+ System.out.println("Expected: 5\n\n") ;
+ System.out.println(quickselect(ary, 3)) ; // would return 10
+ System.out.println("Expected: 10\n\n") ;
+ System.out.println(quickselect(ary, 4)) ; // would return 15
+ System.out.println("Expected: 15\n\n") ;
+ System.out.println(quickselect(ary, 5)) ; // would return 23
+ System.out.println("Expected: 23\n\n") ;
+}
+
+
+
+
 
 
 }
