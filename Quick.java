@@ -72,24 +72,18 @@ private static void swap(int[] data, int first, int second) {
     }
  }
 
-
-
-
- public static void main(String[] args) {
-   int[]ary = {2, 10, 15, 23, 0, 5} ;
-  System.out.println(quickselect(ary, 0)) ;
-  System.out.println("Expected: 0\n\n") ;
- System.out.println(quickselect(ary, 1)) ; // would return 2
- System.out.println("Expected: 2\n\n") ;
- System.out.println(quickselect(ary, 2)) ; // would return 5
- System.out.println("Expected: 5\n\n") ;
- System.out.println(quickselect(ary, 3)) ; // would return 10
- System.out.println("Expected: 10\n\n") ;
- System.out.println(quickselect(ary, 4)) ; // would return 15
- System.out.println("Expected: 15\n\n") ;
- System.out.println(quickselect(ary, 5)) ; // would return 23
- System.out.println("Expected: 23\n\n") ;
+public static void quicksort(int []data){
+  quicksorth(data, 0, data.length-1);
 }
+private static void quicksorth(int[] data, int start, int end) {
+  if (start >= end) {
+    return;
+  }
+  int pivot = partition(data, start, end);
+  quicksorth(data, start, pivot-1);
+  quicksorth(data, pivot+1, end);
+}
+
 
 
 
