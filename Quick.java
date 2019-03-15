@@ -29,7 +29,7 @@ public static int selectpartition (int [] data, int start, int end){
 public static int partition (int [] data, int start, int end){
   Random random = new Random();
   int randomindex = random.nextInt(end - start + 1);
-  int pivot = randomindex;//set pivot to one side
+  int pivot = start + randomindex;//set pivot to one side
   swap(data, pivot, end);
   int part = start; //set start index
   for (int i = start; i <= end - 1; i++) { //loop through array
@@ -60,7 +60,7 @@ private static void swap(int[] data, int first, int second) {
    if (start == end) {
      return data[start];
     } //if the start and end are the same, return that value
-    int pivot = selectpartition(data, start, end); //partition it
+    int pivot = partition(data, start, end); //partition it
     if (pivot == k) {
       return data[pivot];
     } //when the pivot is the same as k, return the value at the pivot
