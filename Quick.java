@@ -17,6 +17,7 @@ public static int selectpartition (int [] data, int start, int end){
   int pivot = end;//set pivot to one side
   int part = start; //set start index
   for (int i = start; i <= end - 1; i++) { //loop through array
+
     if (data[i] < data[pivot]) { //if the current is less than the pivot
       swap(data, i, part);//swap the current with the partiton (start at first)
       part++; //add to the partition
@@ -26,20 +27,37 @@ public static int selectpartition (int [] data, int start, int end){
   return part; //this will be the pivot that was moved
 }
 
+
 public static int partition (int [] data, int start, int end){
-  Random random = new Random();
-  int randomindex = random.nextInt(end - start + 1);
-  int pivot = start + randomindex;//set pivot to one side
-  swap(data, pivot, end);
-  int part = start; //set start index
-  for (int i = start; i <= end - 1; i++) { //loop through array
-    if (data[i] < data[end]) { //if the current is less than the pivot
-      swap(data, i, part);//swap the current with the partiton (start at first)
-      part++; //add to the partition
-    }
+  if(start == end){ //check for best case
+       return start;
   }
-  swap(data, part, end); //switch the pivot back to the partition
-  return part; //this will be the pivot that was moved
+  Random random = new Random();
+  int pivot = getmed(data, start, end);//set pivot to the median of the start end and middle
+  swap(data, pivot, start); // move the pivot to the start
+  pivot = start; //pivot value is whichside to the start
+  int part = start + 1; //set partition to one index in front of the start
+  while(part != end){ //run until the partition equals the end (all elements went through)
+    int whichside = -50; //initialize
+    if(data[part] == data[pivot]){ // if it is equal, random 50/50
+      whichside = random.nextInt(2);
+    }
+    if(data[part] > data[pivot] || whichside == 0){ //swap it to the end (right of the partition) and lower end
+      swap(data, part, end);
+      end--;
+    }
+    else if(data[part] < data[pivot] || whichside == 1){  //otherwise, if it is less, just move on to the next one
+      part++;
+    }
+  } //end the loop
+  if(data[pivot] > data[part]){ //swap the pivot back
+    swap(data, part, pivot); //if the pivot is larger, just switch
+    return part;
+  }
+  else{
+    swap(data, part - 1, pivot); //if it is one smaller, put it one behind the part
+    return part - 1;
+  }
 }
 
 //private method to swap two indicies
@@ -48,6 +66,26 @@ private static void swap(int[] data, int first, int second) {
   data[first] = data[second];
   data[second] = temp;
 }
+
+//gets the median which should be the pivot
+private static int getmed(int[] data, int start, int end){
+  if (data[start] > data[end] && data[start] < data[(end+start)/2]) {
+    return start;
+  }
+  if (data[start] < data[end] && data[start] > data[(end+start)/2]) {
+    return start;
+  }
+  if (data[end] > data[start] && data[end] < data[(end+start)/2])  {
+    return end;
+  }
+  if (data[end] < data[start] && data[end] > data[(end+start)/2]) {
+    return end;
+  }
+  else{
+    return (end+start)/2;
+  }
+}
+
 
 /*return the value that is the kth smallest value of the dataay.
  */
