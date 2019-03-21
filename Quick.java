@@ -16,7 +16,7 @@ public class Quick {
 public static int selectpartition (int [] data, int start, int end){
   int pivot = end;//set pivot to one side
   int part = start; //set start index
-  for (int i = start; i <= end - 1; i++) { //loop through array
+  for (int i = start; i <= end - 1; i++) { //loop through dataay
 
     if (data[i] < data[pivot]) { //if the current is less than the pivot
       swap(data, i, part);//swap the current with the partiton (start at first)
@@ -113,14 +113,34 @@ private static int getmed(int[] data, int start, int end){
 public static void quicksort(int []data){
   quicksorth(data, 0, data.length-1);
 }
+
 private static void quicksorth(int[] data, int start, int end) {
   if (start >= end) {
     return;
   }
+  if (data.length <= 25) {
+    insertionsort(data, start, end);
+  }
+  else {
   int pivot = partition(data, start, end);
   quicksorth(data, start, pivot-1);
   quicksorth(data, pivot+1, end);
 }
+}
+
+private static void insertionsort(int[] data, int lo,int hi)  {
+  for (int i = lo; i <= hi;i++){
+    int temp = data[i]; //temp var
+    int x = i;
+    while (x > lo && data[x-1] > temp){ //while the number on the left is bigger
+      data[x] = data[x-1];//switch
+      x--;
+    }
+  data[x] = temp;
+}
+}
+
+
 
 
 
